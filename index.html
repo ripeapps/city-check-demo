@@ -1,17 +1,14 @@
-
 <!DOCTYPE html>
-<html ng-app="cc-example-module">
+<html>
 <head>
-	<title>City-Check.appspot.com Angular Example</title>
+	<title>City-Check.appspot.com Example</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/favicon.ico" />
 
 	<!-- heavy JS -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/0.7.1/angular-strap.min.js"></script>
     
     <!-- Bootstrap CSS only -->
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
@@ -21,56 +18,10 @@
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-<style>
-body {
-	margin-top: 10px;
-}
-</style>
-
-<script>
-var app = angular.module('cc-example-module', ['$strap.directives']);
-
-app.factory('geo', function($http, $timeout) {
-	return function() {
-		var rv = {}
-
-		// use this to track if we're done reading results yet.
-		rv.done = false;
-
-		$http({method:'GET', url:'https://city-check.appspot.com/json'})
-			.success(function(d) {
-				// NOTE: this delay is purely for dramatic effect; you should probably remove it.
-				$timeout(function() {
-					rv.done = true;
-					rv.json = d;
-				}, 500);
-
-				// Tell the server about our location
-				// This is just an example. could use POST or PUT here as well. Use cookies to
-				// associate to you user's session.
-/*
-				$.get('/geo_checkin?token='+d['token']).success(function() {
-					console.log("Told the server were I am");
-				}).error(function() {
-					console.log("Trouble with the server...");
-				});
-*/
-			}).error(function() {
-				console.log("Won't happen; google rocks!");
-			});
-				
-		return rv;
-	}
-});
-
-app.controller('exampleCtrl', function($scope, geo) {
-	$scope.geo = geo();
-});
-
-</script>
-
 </head>
-<body ng-controller="exampleCtrl">
+<body style="margin-top: 10px">
+	<a href="https://github.com/ripeapps/city-check-demo"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
   <div class="container">
 	<div class="row">
 	  <div class="span12">
@@ -78,62 +29,44 @@ app.controller('exampleCtrl', function($scope, geo) {
 			<i class="icon-map-marker icon-large"></i> City-Check<small><b>.appspot.com</b></small>
 		</h1>
 		<p class="lead">
-			This page demonstrates using <a href="http://angularjs.org/">AngularJS</a>
-			to fetch and display your visitor's geo location
-			(city level) using the free API service provided by
-			<a href="https://city-check.appspot.com">city-check.appspot.com</a>
+			Demos and Examples
 		</p>
-	  </div>
-	</div>
+
+	<ul class="inline">
+      <li>
+        <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=ripeapps&amp;repo=city-check-demo&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+      </li>
+      <li>
+        <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=ripeapps&amp;repo=city-check-demo&amp;type=fork&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="102px" height="20px"></iframe>
+      </li>
+      <li class="follow-btn">
+        <iframe allowtransparency="true" frameborder="0" scrolling="no" src="http://platform.twitter.com/widgets/follow_button.1363148939.html#_=1365524879719&amp;id=twitter-widget-1&amp;lang=en&amp;screen_name=ripeapps&amp;show_count=true&amp;show_screen_name=true&amp;size=m" class="twitter-follow-button twitter-follow-button" style="width: 236px; height: 20px;" title="Twitter Follow Button" data-twttr-rendered="true"></iframe>
+      </li>
+    </ul>
 
 
-	<div class="row">
-	  <div class="span12">
-		<hr />
-		  <span ng-switch on="geo.done">
-			<h4 ng-switch-when="false"><i class="icon-refresh icon-spin"></i> Checking...</h4>
-			<h4 ng-switch-when="true"><i class="icon-ok icon-large"></i> Located!</h4>
-		  </span>
-		<hr />
-	  </div>
-	</div>
-
-	<div class="row" ng-show="geo.done">
-	  <div class="span8">
-		<h2>About You</h2>
-		<p class="lead">You are visiting us from <b>{{geo.json.human_city}}</b>
-		</p>
-		<p>Your IP address is: <b>{{geo.json.ip}}</b>
-		</p>
-		<p>Learn more about your <a href="http://en.wikipedia.org/wiki/Geohash">Geohash</a> here:
-			<a href="http://geohash.org/{{geo.json.city_geohash}}"><b>geohash.org/{{geo.json.city_geohash}}</b></a>
-		</p>
-		<p>Your geo location data is <a href="https://city-check.appspot.com/check/{{geo.json.token}}">cached here</a> for server-side verification purposes.
-	  </div>
-	  <div class="span4">
-		<img class="img-circle" ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{geo.json.city_latlng}}&zoom=8&size=200x200&sensor=false">
-	  </div>
-	</div>
-
-	<div class="row" ng-show="geo.done">
-	  <div class="span12">
-		<h3>Full Data Dump</h3>
-		<dl class="dl-horizontal">
-			<span ng-repeat="(k,v) in geo.json">
-				<dt>{{k}}
-					<dd>{{v}}
-			</span>
-		</dl>
 	  </div>
 	</div>
 
 	<div class="row">
-	  <div class="span12">
-		<hr />
-		<center> A free public service of
-				<a href="http://www.ripeapps.com">Ripe Apps</a>. No warantees.
-		</center>
-	  </div>
+		<div class="span12">
+			<hr/>
+
+			<ul class="thumbnails">
+			  <li class="span4">
+				<div class="thumbnail well">
+				  <img src="AngularJS.png" alt="AngularJS">
+				  <center>
+					 <p><a href="angular.html">View live demo here</a></p>
+				  </center>
+				</div>
+			  </li>
+
+				<!-- add more here -->
+
+
+			</ul>
+		</div>
 	</div>
 
   </div>
