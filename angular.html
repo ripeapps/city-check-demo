@@ -98,6 +98,11 @@ app.controller('exampleCtrl', function($scope, geo) {
 		  <li class="follow-btn">
 			<iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/follow_button.1363148939.html#_=1365524879719&amp;id=twitter-widget-1&amp;lang=en&amp;screen_name=ripeapps&amp;show_count=true&amp;show_screen_name=true&amp;size=m" class="twitter-follow-button twitter-follow-button" style="width: 236px; height: 20px;" title="Twitter Follow Button" data-twttr-rendered="true"></iframe>
 		  </li>
+
+			<li>
+				<a href="http://news.ycombinator.com/submit" class="hn-share-button" data-url="https://city-check.appspot.com/examples/angular.html">Vote on HN</a>
+
+			</li>
 		</ul>
 
 		<hr />
@@ -170,6 +175,16 @@ and <a href="https://city-check.appspot.com/">detailed documentation</a>.
 	</div>
 
   </div>
-</body>
 
+	<!-- for hackernews button -->
+	<script>
+		(function(d, t) {
+			var g = d.createElement(t),
+				s = d.getElementsByTagName(t)[0];
+			g.src = '//hnbutton.appspot.com/static/hn.min.js';
+			s.parentNode.insertBefore(g, s);
+		}(document, 'script'));
+	</script>
+
+</body>
 </html>
