@@ -1,6 +1,7 @@
 # City Check Example
 
-Check city-check.appspot.com for updated info
+Check [city-check.appspot.com](city-check.appspot.com) for updated info.
+Demo [here](https://city-check.appspot.com/angular/index.html).
 
 
 ---
